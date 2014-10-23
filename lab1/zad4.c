@@ -9,30 +9,29 @@ int main(int argc, char**argv)
 {
         int fd[2];
         int child, status;
-        int bytes;
         char buf1[size];
 
         memset(buf1, 0, size);
 
-        pipe(fd);
-        printf("Main process: I'm trying to receive sth from ls programm\n");
+       	printf("argc = %d\n",argc);
+
+	pipe(fd);
+        printf("Two programs connected\n");
         
         if((child=fork())==0)
         {
                 close(fd[0]);
 		close(1);
 		dup(fd[1]);
-               	execl("/bin/ls","ls",0);
+               	execlp(argv[1],argv[1],0);
         }              
        	else
 	{
-		close(fd[1]);
-		do
-		{
-			read(fd[0],buf1, sizeof(buf1));
-			printf("I did it!:\n%s\n", buf1);
-		}while(bytes==size);
 		wait(&status);
+		close(fd[1]);
+		close(0);
+		dup(fd[0]);
+		execlp(argv[2],argv[2],0);
         }       
 	
 	return 0;   

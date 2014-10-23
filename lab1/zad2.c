@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
+#include <sys/wait.h>
 
 #define size 16
 #define cntr 128
@@ -15,7 +17,7 @@ int main(int argc, char**argv)
         memset(buf2, 0, size);
 
         pipe(fd);
-        printf("Main process: I will pass all the data you will type to my child\n");
+        printf("Main process: I will pass all the data to my child\n");
         
         if((child=fork())==0)
         {
