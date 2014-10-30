@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 	char buf[size];	
 	memset(buf, 0, size);
 
-	char *name = "/tmp/myfifo1";
+	char *name = "/tmp/myfifo2";
 	int fd;
 	int bytes;	
 

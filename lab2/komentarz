@@ -1,0 +1,19 @@
+Zad1 i zad1b
+
+Proces piszący (zad1) zapisuje nieprzerwanym strumieniem dane do pliku za kazdym razem uzywajac 32 bajtow na wiadomosc. Jednorazowo jest w stanie zapisac 2048 komunikatow bez odczytu przez inny proces co daje łącznie 64kB pojemności.
+
+Proces zad1b odbiera przy kazdym uruchomieniu jednorazowo 1024 komunikaty.
+
+*łączność za pomocą fifo pokazana
+*powolne odbieranie może być zasymulowane poprzez kontrolowane uruchamianie procesu odbierajacego
+*wysyłanie bez odbiorców to uruchomieniu tylko procesu zad1
+
+Zad2
+* symulacja powolnego wysyłania. Do odbioru proces zad2b.
+Proces zad2 pisze wiadomosci do strumienia z 4sekundowymi odstepami. Proces zad2b czeka na kolejne wiadomosci blokujac sie na odczycie.
+
+mplayer
+Program z tekstowym frontendem i zakodowanymi kilkoma komendami do kontroli aktualnie odtwarzanego utworu.
+Program player posiada prawa dostepu RDWR, aby mozliwe bylo polaczenie w kolejnosci mplayer-program jak i program-mplayer.
+
+mplayer -input file=/tmp/mpfifo plik_muzyczny

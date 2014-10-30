@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 	char buf[size];
       	memset(buf, 0, size);
 
-	char *name = "/tmp/myfifo1";
+	char *name = "/tmp/myfifo2";
 	int fd;
 	int res;
 	int bytes;
@@ -36,12 +36,14 @@ int main(int argc, char** argv)
 		exit(2);
 	}
 	
-	for(int i = 0;;i++)
+	for(int i=0;;i++)
 	{
 		sprintf(buf,"%d: %s",i,"hello");
 		bytes = write(fd, buf, size);	
 		if(bytes==size) printf("Sent message no. %d\n", i);
-		if(bytes<0)  perror("message not sent");	
+		if(bytes<0)  perror("message not sent");
+
+		sleep(4);	
 	}
 	close(fd);
 	return 0;
