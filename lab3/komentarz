@@ -1,0 +1,7 @@
+Przedstawione jest rozwiazanie problemu 5 filozofow za pomoca semaforow. Zdecydowano się na sposob z atomowa operacja podniesienia dwoch 'widelcow'.
+
+Zadanie jest uruchamiane za pomoca skryptu run z odpowiednim parametrem
+- 'start' uruchamia proces zarzadzajacy (tworzy segment pamieci i go zeruje), ustawia semafor, tworzy pusty plik debug) oraz 5 procesow filozofow dzialajacych w tle
+- 'kill' zabija uruchomione procesy
+
+

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if  [ $1 == 'start' ]
+then
+	./manager
+	./philosopher 0 &
+	./philosopher 1 &
+	./philosopher 2 &
+	./philosopher 3 &
+	./philosopher 4 &
+elif [ $1 == 'kill' ]
+then
+	killall philosopher
+fi
