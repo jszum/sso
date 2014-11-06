@@ -39,16 +39,24 @@ int init_semaphore()
 void semSet()
 {
 	semunion.val = COUNT;
-	semctl(semid, 0, SETVAL , semunion);
+	if(semctl(semid, 0, SETVAL , semunion) < 0 )
+	{
+		fprintf(stderr, "cannot set sem");
+	} 
 }
 
 
-void semTake() {
+int semTake(int num) {
     struct sembuf sops;
     sops.sem_num = 0;
     sops.sem_op = -2;
     sops.sem_flg = 0;
-    semop(semid, &sops, 1);
+    if(semop(semid, &sops, 1) < 0)
+    {
+		fprintf(stderr, "cannot take sem - I wont eat Ph.[%d]\n", num);
+		return -1;
+    } 
+    return 0;
 }
 
 void semGet()
@@ -57,22 +65,28 @@ void semGet()
 	printf("sem value = %d\n", value);
 }
 
-void semRelease() {
+int semRelease() {
     struct sembuf sops;
     sops.sem_num = 0;
     sops.sem_op = 2;
     sops.sem_flg = 0;
-    semop(semid, &sops, 1);
+    if(semop(semid, &sops, 1) < 0)
+    {
+	fprintf(stderr, "cannot release sem\n");
+	return -1;
+    } 
+    return 0;
+
 }
 
 void semFree() {
+
     semctl(semid, 1, IPC_RMID );
 }
 
-void printStatus(char *stat)
+void printStatus(char *stat, int num, int myeat)
 {
-	printf("[%c][%c][%c][%c][%c]\n",stat[0],stat[1],stat[2],stat[3],stat[4]);
-	
+	printf("[%c][%c][%c][%c][%c] - Ph.[%d] ate %d times\n",stat[0],stat[1],stat[2],stat[3],stat[4], num, myeat);
 	if(DEBUG)
 	{
 		int fd = open("debug.txt", O_APPEND | O_RDWR);
@@ -86,6 +100,7 @@ void printStatus(char *stat)
 int main(int argc, char **argv)
 {
 	size_t size;
+	int myeat = 0;
 	size = sizeof(char)*COUNT;
 
 	int mynumber = atoi(argv[1]);
@@ -104,14 +119,15 @@ int main(int argc, char **argv)
 	while(1)
 	{
 		status[mynumber] = 'm';
-		printStatus(status);
+		printStatus(status, mynumber, myeat);
 		sleep(2);
 		status[mynumber] = 'w';
-		printStatus(status);
+		printStatus(status, mynumber, myeat);
 		sleep(1);
-		semTake();
+		while(semTake(mynumber) == -1);
 		status[mynumber] = 'j';
-		printStatus(status);
+		myeat = myeat+1;
+		printStatus(status, mynumber, myeat);
 		sleep(4);
 		semRelease();
 	}

@@ -11,4 +11,12 @@ then
 elif [ $1 == 'kill' ]
 then
 	killall philosopher
+
+elif [ $1 == 'suspend' ]
+then
+	killall -STOP philosopher
+
+elif [ $1 == 'continue' ]
+then
+	killall -CONT philosopher
 fi
