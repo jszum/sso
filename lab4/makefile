@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -Wall -g -std=c99
+CFLAGS= -Wall -g -std=c99 -D _BSD_SOURCE
 
 all: thread 
 
