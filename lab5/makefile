@@ -10,9 +10,9 @@ client: client.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 
-zip: sso4.zip
+zip: sso6.zip
 
-sso4.zip: *.c makefile
+sso6.zip: *.c makefile
 	zip $@ $^
 
 
